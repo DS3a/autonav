@@ -1,0 +1,29 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/deep/dev/AutoZ_Stuff/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/deep/vrx_catkin_ws/devel/include/**",
+        "/home/deep/catkin_ws/src/autonav/include/**",
+        "/home/deep/catkin_ws/src/ROS_Playground/bot_teleop_cpp/include/**",
+        "/home/deep/catkin_ws/src/ebot_nav/include/**",
+        "/home/deep/catkin_ws/src/ROS_Playground/get_distance/include/**",
+        "/home/deep/dev/AutoZ_Stuff/catkin_ws/src/igvc_autonav/include/**",
+        "/home/deep/dev/AutoZ_Stuff/catkin_ws/src/locomotion/include/**",
+        "/home/deep/dev/AutoZ_Stuff/catkin_ws/src/pcl_tutorial/include/**",
+        "/home/deep/dev/AutoZ_Stuff/catkin_ws/src/rplidar_a1/include/**",
+        "/home/deep/vrx_catkin_ws/src/vrx/usv_gazebo_plugins/include/**",
+        "/home/deep/vrx_catkin_ws/src/vrx/vrx_gazebo/include/**",
+        "/home/deep/vrx_catkin_ws/src/vrx/wave_gazebo_plugins/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

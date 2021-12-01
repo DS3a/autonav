@@ -1,0 +1,17 @@
+<launch>
+
+    <node name="lane_following_pid" pkg="pid" type="controller" ns="lane_following_pid">
+      <param name="Kp" value="0.005" />
+      <param name="Ki" value="0.0" />
+      <param name="Kd" value="0.0" />
+      <param name="upper_limit" value="1.0" />
+      <param name="lower_limit" value="-1.0" />
+      <param name="windup_limit" value="10" />
+      <param name="max_loop_frequency" value="100.0" />
+      <param name="min_loop_frequency" value="100.0" />
+    </node>
+
+    <node name="lane_follow" pkg="autonav" type="lane_follow.py" />
+
+
+</launch>
