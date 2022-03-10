@@ -104,7 +104,10 @@ def mask_lane(image):
 
 
 def perspective_change(frame):
-    y, x, ch = frame.shape
+    if len(frame.shape) == 3:
+        y, x, ch = frame.shape
+    else:
+        y, x = frame.shape
     #pts1 = np.float32([[x/2.5,0], [x-x/2.5,0], [x,y], [0, y]])
     #pts1 = np.float32([[0, 0], [1920, 0], [0, 1080], [1920, 1080]])
     pts1 = np.float32([[x/4, y/3], [x-x/4, y/3], [0, y], [x, y]])
@@ -118,7 +121,10 @@ def perspective_change(frame):
     return dst
 
 def inverse_perspective_change(frame):
-    y, x, ch = frame.shape
+    if len(frame.shape) == 3:
+        y, x, ch = frame.shape
+    else:
+        y, x = frame.shape
     #pts1 = np.float32([[x/2.5,0], [x-x/2.5,0], [x,y], [0, y]])
     #pts1 = np.float32([[0, 0], [1920, 0], [0, 1080], [1920, 1080]])
     pts1 = np.float32([[x/4, y/3], [x-x/4, y/3], [0, y], [x, y]])
