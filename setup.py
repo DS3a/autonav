@@ -6,3 +6,5 @@ d = generate_distutils_setup(
     package_dir={'': 'src'}
 )
 setup(**d)
+
+### RUN python3 setup.py install

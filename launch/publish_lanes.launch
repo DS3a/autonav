@@ -1,0 +1,4 @@
+<launch>
+    <node name="lane_mask_publisher" type="lane_mask_publisher.py" pkg="autonav" />
+    <include file="$(find autonav)/launch/depth_to_pointcloud.launch" />
+</launch>

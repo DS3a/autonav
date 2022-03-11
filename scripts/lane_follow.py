@@ -4,7 +4,7 @@ import rospy
 from sensor_msgs.msg import Image
 from std_msgs.msg import Float64, Bool
 from geometry_msgs.msg import Twist
-import lane_detection_lib as lane_detection
+import lane_detection_lib
 import numpy as np
 import cv2
 from cv_bridge import CvBridge
@@ -32,7 +32,7 @@ def control_callback(data: Float64):
 def img_recvd(data: Image):
     cv_image = bridge.imgmsg_to_cv2(data, desired_encoding="passthrough")
     cv_image = cv2.cvtColor(cv_image, cv2.COLOR_RGB2BGR)
-    img, ang, lane_found = lane_detection.parse_image(cv_image)
+    img, ang, lane_found = lane_detection_lib.parse_image(cv_image)
     image_message = bridge.cv2_to_imgmsg(img, encoding="passthrough")
     image_message.header = data.header
     img_pub.publish(image_message)
