@@ -70,36 +70,27 @@ def mask_lane(image):
             image: An np.array compatible with plt.imshow.
     """
     # Convert the input image to HSL
-    converted_image = cv2.cvtColor(image, cv2.COLOR_RGB2HLS)
-
-    # White color mask50
-#    lower_threshold = np.uint8([0, 50, 15])
-    lower_threshold = np.uint8([0, 100, 0])
-    upper_threshold = np.uint8([255, 255, 255])
-#    upper_threshold = np.uint8([70, 255, 255])
-
-    ## TEMPORARY FOR BLUE LINES
-#    lower_threshold = np.uint8([0, 0, 80])
-#    upper_threshold = np.uint8([70, 100, 255])
- 
- 
-    ## TEMPORARY FOR RED LINES
-#    lower_threshold = np.uint8([110, 50, 70])
-#    upper_threshold = np.uint8([170, 100, 150])
-
-
-    white_mask = cv2.inRange(converted_image, lower_threshold, upper_threshold)
+    converted_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
 
     # red color mask
-    lower_threshold = np.uint8([0, 0, 170])
-    upper_threshold = np.uint8([255, 255, 255])
-    red_mask = cv2.inRange(converted_image, lower_threshold, upper_threshold)
+    lower_threshold = np.uint8([124, 0, 0])
+    upper_threshold = np.uint8([150, 255, 255])
+    red_mask = cv2.inRange(np.copy(converted_image), lower_threshold, upper_threshold)
+
+
+    # White color mask50
+    white_lower_threshold = np.uint8([0, 0, 70])
+    white_upper_threshold = np.uint8([255, 50, 255])
+    white_mask = cv2.inRange(np.copy(converted_image), white_lower_threshold, white_upper_threshold)
+
+#    (thresh, red_mask) = cv2.threshold(red_mask, 1, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+#    (thresh, white_mask) = cv2.threshold(white_mask, 1, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
     # Combine white and yellow masks
-    mask = cv2.bitwise_or(white_mask, red_mask)
-#    masked_image = cv2.bitwise_and(image, image, mask=mask)
-    masked_image = cv2.bitwise_and(image, image, mask=mask)
-    return masked_image
+    total_mask = cv2.bitwise_or(red_mask, white_mask)
+    masked_image = cv2.bitwise_and(image, image, mask=red_mask)
+    return cv2.merge((total_mask, total_mask, total_mask))
+    
 
 
 def perspective_change(frame):
@@ -215,7 +206,7 @@ def get_contours(frame, image):
     
     if (not lane_found) or lc == 0:
         lc = 1
-    print(angs/lc)
+#    print(angs/lc)
     return frame, angs/lc, lane_found
 
 def parse_image(frame):
