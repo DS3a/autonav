@@ -88,9 +88,24 @@ def mask_lane(image):
 
     # Combine white and yellow masks
     total_mask = cv2.bitwise_or(red_mask, white_mask)
-    masked_image = cv2.bitwise_and(image, image, mask=red_mask)
+
+    # cnts, _ = cv2.findContours(total_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+
+#     noise_mask = np.zeros_like(total_mask)
+#     print(cnts)
+#     for c in cnts:
+#         area = cv2.contourArea(c)
+#         if area < 490:
+#             cv2.fillPoly(noise_mask, pts=[c], color=(255, 255, 255))
+#     #    cv2.drawContours(mask, [c], 0, (0, 0, 255), 2)
+
+#     noise_mask = cv2.bitwise_not(noise_mask)
+#     filtered_mask = cv2.bitwise_and(total_mask, total_mask, mask=noise_mask)
+
+# #    masked_image = cv2.bitwise_and(image, image, mask=red_mask)
+#     return cv2.merge((filtered_mask, filtered_mask, filtered_mask))
     return cv2.merge((total_mask, total_mask, total_mask))
-    
 
 
 def perspective_change(frame):
