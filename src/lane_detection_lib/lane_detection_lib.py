@@ -165,7 +165,7 @@ def get_lines(frame):
                 cv2.line(frame, (x1, y1), (x2, y2), (0, 0, 255), 30)
                 cv2.line(empty, (x1, y1), (x2, y2), (0, 0, 255), 30)
 
-    return frame, mask, empty
+    return empty, mask, frame
 
 def get_contours(frame, image):
     if len(frame.shape) == 3:

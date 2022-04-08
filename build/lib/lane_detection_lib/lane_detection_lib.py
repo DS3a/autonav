@@ -74,7 +74,7 @@ def mask_lane(image):
 
     # red color mask
     lower_threshold = np.uint8([124, 0, 0])
-    upper_threshold = np.uint8([255, 255, 255])
+    upper_threshold = np.uint8([150, 255, 255])
     red_mask = cv2.inRange(np.copy(converted_image), lower_threshold, upper_threshold)
 
 
@@ -83,14 +83,29 @@ def mask_lane(image):
     white_upper_threshold = np.uint8([255, 50, 255])
     white_mask = cv2.inRange(np.copy(converted_image), white_lower_threshold, white_upper_threshold)
 
-    (thresh, red_mask) = cv2.threshold(red_mask, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-    (thresh, white_mask) = cv2.threshold(white_mask, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+#    (thresh, red_mask) = cv2.threshold(red_mask, 1, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+#    (thresh, white_mask) = cv2.threshold(white_mask, 1, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
     # Combine white and yellow masks
-    mask = cv2.bitwise_or(red_mask, white_mask)
-    masked_image = cv2.bitwise_and(image, image, mask=mask)
-    return mask
-    
+    total_mask = cv2.bitwise_or(red_mask, white_mask)
+
+    # cnts, _ = cv2.findContours(total_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+
+#     noise_mask = np.zeros_like(total_mask)
+#     print(cnts)
+#     for c in cnts:
+#         area = cv2.contourArea(c)
+#         if area < 490:
+#             cv2.fillPoly(noise_mask, pts=[c], color=(255, 255, 255))
+#     #    cv2.drawContours(mask, [c], 0, (0, 0, 255), 2)
+
+#     noise_mask = cv2.bitwise_not(noise_mask)
+#     filtered_mask = cv2.bitwise_and(total_mask, total_mask, mask=noise_mask)
+
+# #    masked_image = cv2.bitwise_and(image, image, mask=red_mask)
+#     return cv2.merge((filtered_mask, filtered_mask, filtered_mask))
+    return cv2.merge((total_mask, total_mask, total_mask))
 
 
 def perspective_change(frame):
@@ -150,7 +165,7 @@ def get_lines(frame):
                 cv2.line(frame, (x1, y1), (x2, y2), (0, 0, 255), 30)
                 cv2.line(empty, (x1, y1), (x2, y2), (0, 0, 255), 30)
 
-    return frame, mask, empty
+    return empty, mask, frame
 
 def get_contours(frame, image):
     if len(frame.shape) == 3:
