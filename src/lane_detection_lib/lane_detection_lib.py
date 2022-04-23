@@ -73,14 +73,14 @@ def mask_lane(image):
     converted_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
 
     # red color mask
-    lower_threshold = np.uint8([124, 0, 0])
+    lower_threshold = np.uint8([150, 255, 255])
     upper_threshold = np.uint8([150, 255, 255])
     red_mask = cv2.inRange(np.copy(converted_image), lower_threshold, upper_threshold)
 
 
     # White color mask50
-    white_lower_threshold = np.uint8([0, 0, 70])
-    white_upper_threshold = np.uint8([255, 50, 255])
+    white_lower_threshold = np.uint8([0, 0, 110])
+    white_upper_threshold = np.uint8([75, 50, 255])
     white_mask = cv2.inRange(np.copy(converted_image), white_lower_threshold, white_upper_threshold)
 
 #    (thresh, red_mask) = cv2.threshold(red_mask, 1, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)

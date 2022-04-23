@@ -14,7 +14,7 @@ from cv_bridge import CvBridge
 HEADERS = ""
 bridge = CvBridge()
 IMAGE_TOPIC_NAME = "/camera/color/image_raw"
-DEPTH_IMAGE_TOPIC_NAME = "/camera/depth/image_rect_raw"
+DEPTH_IMAGE_TOPIC_NAME = "/camera/aligned_depth_to_color/image_raw"
 # attested that both topics publish image of same shape
 
 
@@ -33,6 +33,12 @@ def camera_info_recvd(data: CameraInfo):
 
 def depth_img_recvd(data: Image):
     cv_image = bridge.imgmsg_to_cv2(data, desired_encoding="passthrough")
+
+    if mask is None:
+        return
+
+    print(cv_image.shape)
+    print(mask.shape)
 
     img = cv2.bitwise_and(cv_image, cv_image, mask=mask)
     image_message = bridge.cv2_to_imgmsg(img)
@@ -55,7 +61,7 @@ def img_recvd(data: Image):
         pass
 
 if __name__ == "__main__":
-    info_sub = rospy.Subscriber("/camera/depth/camera_info", CameraInfo, camera_info_recvd)
+    info_sub = rospy.Subscriber("/camera/aligned_depth_to_color/camera_info", CameraInfo, camera_info_recvd)
     if info_found:
         info_sub.unregister()
     rospy.Subscriber(IMAGE_TOPIC_NAME, Image, img_recvd)
